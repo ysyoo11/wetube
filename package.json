@@ -1,0 +1,20 @@
+{
+  "name": "wetube",
+  "version": "1.0.0",
+  "description": "Cloning YouTube with Vanilla and NodeJS",
+  "author": "Yeonsuk Yoo",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.10.2",
+    "@babel/node": "^7.10.1",
+    "@babel/preset-env": "^7.10.2",
+    "core-js": "^3.6.5",
+    "express": "^4.17.1"
+  },
+  "scripts": {
+    "start": "nodemon --exec babel-node index.js"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
