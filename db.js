@@ -4,7 +4,8 @@ export const videos = [
     title: "The Maldives",
     description: "Honeymoon trip",
     views: 569,
-    videoFile: "https://archive.org/details/BigBuckBunny_124",
+    videoFile:
+      "https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4",
     creator: {
       id: 10302,
       name: "Yeonsuk",
@@ -16,7 +17,8 @@ export const videos = [
     title: "Jieun",
     description: "My wife",
     views: 569,
-    videoFile: "https://archive.org/details/BigBuckBunny_124",
+    videoFile:
+      "https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4",
     creator: {
       id: 10302,
       name: "Yeonsuk",
@@ -28,7 +30,8 @@ export const videos = [
     title: "One Punch Man",
     description: "Saitama sensei is so cool",
     views: 569,
-    videoFile: "https://archive.org/details/BigBuckBunny_124",
+    videoFile:
+      "https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4",
     creator: {
       id: 10302,
       name: "Yeonsuk",

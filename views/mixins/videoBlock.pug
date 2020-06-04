@@ -1,0 +1,10 @@
+//- mixin은 pug의 함수의 일종이다.
+
+mixin videoBlock(video = {})
+    .videoBlock
+        video.videoBlock__thumbnail(src=video.videoFile, controls=true)
+        h4.videoBlock__title=video.title
+        h6.videoBlock__views=video.views
+//- mixin 에는 인자가 하나 필요하다. 여기서는 인자의 이름을 video라고 지정.
+//- 인자의 기본값은 0. 기본적으로 빈 객체다.
+
