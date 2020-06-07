@@ -22,7 +22,7 @@ export const postLogin = (req, res) => {
 };
 
 export const logout = (req, res) => {
-  // ToDo: Proceed log out
+  // ToDo: Process log out
   res.redirect(routes.home);
 };
 export const userDetail = (req, res) =>
