@@ -19,6 +19,12 @@ const VideoSchema = new mongoose.Schema({
     default: Date.now,
     // 날짜를 반혼하는 함수
   },
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Comment",
+    },
+  ],
 });
 
 const model = mongoose.model("Video", VideoSchema);
