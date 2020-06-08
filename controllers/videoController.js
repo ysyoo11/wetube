@@ -21,14 +21,17 @@ export const search = (req, res) => {
 export const getUpload = (req, res) =>
   res.render("upload", { pageTitle: "Upload" });
 
-export const postUpload = (req, res) => {
+export const postUpload = async (req, res) => {
   const {
-    body: { file, title, description },
+    body: { title, description },
+    file: { path },
   } = req;
-  // ToDo: Upload and save video
-  res.redirect(routes.videoDetail(546897));
-  // After uploading, new id will be assigned to the video.
-  // The user will be redirected to the "videoDetail" page corresponds to the newly uploaded video.
+  const newVideo = await Video.create({
+    fileUrl: path,
+    title,
+    description,
+  });
+  res.redirect(routes.videoDetail(newVideo.id));
 };
 
 export const videoDetail = (req, res) =>
