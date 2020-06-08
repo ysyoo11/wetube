@@ -17,7 +17,7 @@ const VideoSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now,
-    // 날짜를 반혼하는 함수
+    // 날짜를 반환하는 함수
   },
   comments: [
     {
