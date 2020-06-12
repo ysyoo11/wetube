@@ -3,7 +3,6 @@ import routes from "../routes";
 import {
   getUpload,
   videoDetail,
-  editVideo,
   deleteVideo,
   postUpload,
   getEditVideo,

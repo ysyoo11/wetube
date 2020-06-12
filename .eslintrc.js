@@ -16,6 +16,7 @@ module.exports = {
   rules: {
     "no-console": "off",
     "spaced-comment": "off",
+    "no-else-return": "off",
     // "import/no-unresolved": "[2, {commonjs: true, amd: true}]",
     // "import/named": "2",
     // "import/namespace": "2",
