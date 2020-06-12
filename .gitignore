@@ -120,5 +120,5 @@ dist
 .pnp.*
 
 uploads
-
 yarn.lock
+static

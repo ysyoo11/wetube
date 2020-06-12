@@ -8,10 +8,18 @@ const ENTRY_FILE = path.resolve(__dirname, "assets", "js", "main.js");
 const OUTPUT_DIR = path.join(__dirname, "static");
 
 const config = {
-  entry: ENTRY_FILE,
+  entry: ["@babel/polyfill", ENTRY_FILE],
   mode: MODE,
   module: {
     rules: [
+      {
+        test: /\.(js)$/,
+        use: [
+          {
+            loader: "babel-loader",
+          },
+        ],
+      },
       {
         test: /\.(scss)$/,
         use: ExtractCSS.extract([
@@ -25,8 +33,8 @@ const config = {
             loader: "postcss-loader",
             // css를 받아서, 우리가 얘한테 주는 plugin을 받아서 css를 변환해줌
             options: {
-              plugin() {
-                return [autoprefixer({ browsers: "cover 99.5%" })];
+              plugins() {
+                return [autoprefixer({ overrideBrowserslist: "cover 99.5%" })];
               },
             },
           },
