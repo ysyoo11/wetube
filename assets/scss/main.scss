@@ -11,23 +11,38 @@ body {
 }
 
 main {
-  width: 1400px;
-  max-width: 1400px;
+  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
   min-height: 70vh;
 }
 
 button,
-input {
+input :not([type="file"]),
+textarea,
+.fileUpload {
   padding: 7px 10px;
   width: 100%;
+  border: none;
   border-radius: 5px;
   font-size: 14px;
   color: $black;
   font-weight: 600;
+  background-color: white;
+  max-width: 320px;
+  resize: none;
   &::placeholder {
     font-weight: 300;
     color: rgba(0, 0, 0, 0.7);
   }
+}
+
+button {
+  border: none;
+  color: white;
+  background-color: #3498db;
   cursor: pointer;
+}
+button.delete {
+  background-color: $dark-red;
 }
