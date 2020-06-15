@@ -22,6 +22,10 @@ const EDIT_VIDEO = "/:id/edit";
 const DELETE_VIDEO = "/:id/delete";
 // Express는 똑똑해서 :id 라고 입력된 부분은 변하는 값이라는 것을 알아차린다
 
+// Github
+const GITHUB = "/auth/github";
+const GITHUB_CALLBACK = "/auth/github/callback";
+
 // Object 만들기
 const routes = {
   home: HOME,
@@ -62,6 +66,8 @@ const routes = {
       return DELETE_VIDEO;
     }
   },
+  gitHub: GITHUB,
+  gitHubCallback: GITHUB_CALLBACK,
 };
 
 export default routes;
