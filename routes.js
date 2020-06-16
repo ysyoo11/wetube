@@ -13,6 +13,7 @@ const USER_DETAIL = "/:id";
 // 위 코드는 각 유저에게 부여된 고유의 id를 뒤에 붙이는 URL이다. ex) /users/ysyoo11
 const EDIT_PROFILE = "/edit-profile";
 const CHANGE_PASSWORD = "/change-password";
+const ME = "/me";
 
 // Videos
 const VIDEOS = "/videos";
@@ -34,6 +35,7 @@ const routes = {
   logout: LOGOUT,
   search: SEARCH,
   users: USERS,
+  me: ME,
   userDetail: (id) => {
     if (id) {
       return `/users/${id}`;

@@ -203,6 +203,10 @@ button {
 button.delete {
   background-color: #bb2f2a; }
 
+a:visited {
+  text-decoration: none;
+  color: white; }
+
 .header {
   background-color: #ea232c;
   margin-bottom: 50px; }

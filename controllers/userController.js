@@ -35,11 +35,13 @@ export const postLogin = passport.authenticate("local", {
 
 export const githubLogin = passport.authenticate("github");
 
+// 사용자가 깃헙에서 돌아왔을 때 사용되는 함수
 export const githubLoginCallback = async (_, __, profile, cb) => {
   // 사용하지 않는 변수가 있을 경우에는 위와 같이 밑줄 표시. 그냥 삭제하면 안 된다. 순서대로 변수를 인식하기 때문.
   const {
     _json: { id, avatar_url, name, email },
   } = profile;
+  console.log(avatar_url);
   try {
     const user = await User.findOne({ email });
     // 사용자의 email과 깃헙에서 온 email이 동일한지 확인해서 user를 찾는 식 (same as {email: email})
@@ -60,7 +62,6 @@ export const githubLoginCallback = async (_, __, profile, cb) => {
     return cb(user);
   }
 };
-// 사용자가 깃헙에서 돌아왔을 때 사용되는 함수
 
 export const postGithubLogin = (req, res) => {
   res.redirect(routes.home);
@@ -70,6 +71,12 @@ export const logout = (req, res) => {
   req.logout();
   res.redirect(routes.home);
 };
+
+export const getMe = (req, res) => {
+  res.render("userDetail", { pageTitle: "User Detail", user: req.user });
+  // req:user 은 현재 로그인 되어 있는 사용자.
+};
+
 export const userDetail = (req, res) =>
   res.render("userDetail", { pageTitle: "User Detail" });
 export const editProfile = (req, res) =>

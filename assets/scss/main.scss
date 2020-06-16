@@ -46,3 +46,8 @@ button {
 button.delete {
   background-color: $dark-red;
 }
+
+a:visited {
+  text-decoration: none;
+  color: white;
+}
