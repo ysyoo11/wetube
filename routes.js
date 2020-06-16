@@ -32,8 +32,8 @@ const FB = "/auth/facebook";
 const FB_CALLBACK = "/auth/facebook/callback";
 
 // Kakaotalk
-const KT = "/auth/kakaotalk";
-const KT_CALLBACK = "/auth/kakaotalk/callback";
+const KT = "/auth/kakao";
+const KT_CALLBACK = "/oauth";
 
 // Object 만들기
 const routes = {

@@ -30,6 +30,7 @@ app.use(morgan("dev"));
 app.use(
   session({
     secret: process.env.COOKIE_SECRET,
+    // secret: 무작위 문자열. 쿠키에 들어있는 session ID를 암호화 하기 위한 것.
     resave: true,
     saveUninitialized: false,
     store: new CookieStore({ mongooseConnection: mongoose.connection }),
@@ -37,9 +38,13 @@ app.use(
   })
 );
 app.use(passport.initialize());
+// 위에 cookieParser에서 실행된 cookie가 쭉 내려와서 passport는 초기화(initialize)되고,
 app.use(passport.session());
+// 그 다음엔 passport가 제 스스로 쿠키를 들여다 봐서 그 쿠키 정보에 해당하는 유저를 찾아 줄 것이다.
 
 app.use(localsMiddleware);
+// 위에서 이어 받아 passport는 자기가 찾은 사용자를 요청(request)의 object, 즉 req.user로 만들어주게 된다.
+// 그러면 그 user object를 템플릿에 추가시켜 줄 수 있다. 예를 들면 header.pug 에 있는 !loggeduser 처럼.
 
 app.use(routes.home, globalRouter);
 app.use(routes.users, userRouter);

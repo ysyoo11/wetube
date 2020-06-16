@@ -1,11 +1,13 @@
 import passport from "passport";
 import GithubStrategy from "passport-github";
 import FacebookStrategy from "passport-facebook";
+import KakaoStrategy from "passport-kakao";
 import User from "./models/User";
 import routes from "./routes";
 import {
   githubLoginCallback,
   facebookLoginCallback,
+  kakaoLoginCallback,
 } from "./controllers/userController";
 
 passport.use(User.createStrategy());
@@ -35,12 +37,18 @@ passport.use(
 );
 
 passport.use(
-  new KakaoStrategy({
-    clientID: process.env.KT_ID,
-    clientSecret: process.env.KT_SECRET, // clientSecret을 사용하지 않는다면 넘기지 말거나 빈 스트링을 넘길 것
-    callbackURL: `http://localhost:4000${routes.kakaotalkCallback}`,
-  })
+  new KakaoStrategy(
+    {
+      clientID: process.env.KT_ID,
+      callbackURL: `http://localhost:4000${routes.kakaotalkCallback}`,
+    },
+    kakaoLoginCallback
+  )
 );
 
 passport.serializeUser(User.serializeUser());
+// serialization: 어떤 field가 쿠키에 포함될 것인지 알려주는 역할
+// 여기서는 "이봐 passport, 쿠키에는 오로지 user.id만 담아서 보내도록 해" 라고 지시하는 것.
 passport.deserializeUser(User.deserializeUser());
+// 어느 사용자인지 어떻게 찾는가?
+// 그 쿠키의 정보를 어떻게 사용자로 전환하는가?
