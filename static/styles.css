@@ -581,3 +581,5 @@ a:visited {
             flex-direction: column; }
     .user-profile .user-profile__btns a:not(:last-child) {
       margin-bottom: 10px; }
+    .user-profile .user-profile__btns button {
+      width: 170px; }

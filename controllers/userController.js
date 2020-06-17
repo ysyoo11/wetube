@@ -1,7 +1,6 @@
 import passport from "passport";
 import routes from "../routes";
 import User from "../models/User";
-import { json } from "express";
 
 export const getJoin = (req, res) => res.render("join", { pageTitle: "Join" });
 export const postJoin = async (req, res, next) => {
@@ -176,9 +175,30 @@ export const postEditProfile = async (req, res) => {
     });
     res.redirect(routes.me);
   } catch (error) {
-    res.render("editProfile", { pageTitle: "Edit Profile" });
+    res.redirect(routes.editProfile);
   }
 };
 
-export const changePassword = (req, res) =>
+export const getChangePassword = (req, res) =>
   res.render("changePassword", { pageTitle: "Change Password" });
+
+export const postChangePassword = async (req, res) => {
+  const {
+    body: { oldPassword, newPassword, newPassword2 },
+  } = req;
+  try {
+    if (newPassword !== newPassword2) {
+      res.status(400);
+      res.redirect(routes.changePassword);
+      return;
+    }
+    await req.user.changePassword(oldPassword, newPassword);
+    // changePassword 는 passport-local-mongoose가 갖고 있는 함수
+    res.redirect(routes.me);
+  } catch (error) {
+    res.status(400);
+    res.redirect(`/users${routes.changePassword}`);
+  }
+};
+// res.status(400) 을 넣는 이유: password 관련이면 구글은 자동적으로 status 200을 리턴하는데
+// 구글은 매번 "헤이! 패스워드 바꿔" 라고 말할 것이다. 왜냐면, 이걸 성공적이라고 생각하기 때문에.
