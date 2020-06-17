@@ -157,7 +157,28 @@ export const userDetail = async (req, res) => {
   }
 };
 
-export const editProfile = (req, res) =>
+export const getEditProfile = (req, res) =>
   res.render("editProfile", { pageTitle: "Edit Profile" });
+
+export const postEditProfile = async (req, res) => {
+  const {
+    body: { name, email },
+    file,
+  } = req;
+  try {
+    await User.findByIdAndUpdate(req.user.id, {
+      name,
+      email,
+      avatarUrl: file ? file.path : req.user.avatarUrl,
+      // 해석: file이 있으면 file.path를 줄 것이다. file이 없으면 req.user.avatarUrl 해서 기존의 것을 줄 것이다.
+      // 즉, 만약 유저가 파일을 추가하지 않으면 avatarUrl을 중복해서 쓰길 원하지 않기 때문에 현재 있는 것을 준다.
+      // 항상 request 객체 안에는 user가 있다는 것을 명심할 것. (내가 인증하면)
+    });
+    res.redirect(routes.me);
+  } catch (error) {
+    res.render("editProfile", { pageTitle: "Edit Profile" });
+  }
+};
+
 export const changePassword = (req, res) =>
   res.render("changePassword", { pageTitle: "Change Password" });
