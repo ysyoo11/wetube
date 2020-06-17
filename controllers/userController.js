@@ -2,6 +2,8 @@ import passport from "passport";
 import routes from "../routes";
 import User from "../models/User";
 
+// Join
+
 export const getJoin = (req, res) => res.render("join", { pageTitle: "Join" });
 export const postJoin = async (req, res, next) => {
   const {
@@ -25,6 +27,8 @@ export const postJoin = async (req, res, next) => {
   }
 };
 
+// Log In with Email
+
 export const getLogin = (req, res) =>
   res.render("login", { pageTitle: "Log In" });
 
@@ -33,6 +37,8 @@ export const postLogin = passport.authenticate("local", {
   failureRedirect: routes.login,
   successRedirect: routes.home,
 });
+
+// Github Log In
 
 export const githubLogin = passport.authenticate("github");
 
@@ -67,6 +73,8 @@ export const postGithubLogin = (req, res) => {
   res.redirect(routes.home);
 };
 
+// Facebook Log In
+
 export const facebookLogin = passport.authenticate("facebook");
 
 export const facebookLoginCallback = async (_, __, profile, cb) => {
@@ -98,6 +106,8 @@ export const facebookLoginCallback = async (_, __, profile, cb) => {
 export const postFacebookLogin = (req, res) => {
   res.redirect(routes.home);
 };
+
+// Kakao Log In
 
 export const kakaoLogin = passport.authenticate("kakao");
 
@@ -134,27 +144,41 @@ export const postKakaoLogin = (req, res) => {
   res.redirect(routes.home);
 };
 
+// Log Out
+
 export const logout = (req, res) => {
   req.logout();
   res.redirect(routes.home);
 };
 
-export const getMe = (req, res) => {
-  res.render("userDetail", { pageTitle: "User Detail", user: req.user });
-  // req:user 은 현재 로그인 되어 있는 사용자.
+// Me
+
+export const getMe = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).populate("videos");
+    res.render("userDetail", { pageTitle: "User Detail", user });
+    // req:user 은 현재 로그인 되어 있는 사용자.
+  } catch (error) {
+    res.redirect(routes.home);
+  }
 };
+
+// User Detail
 
 export const userDetail = async (req, res) => {
   const {
     params: { id },
   } = req;
   try {
-    const user = await User.findById(id);
+    const user = await User.findById(id).populate("videos");
+    console.log(user);
     res.render("userDetail", { pageTitle: "User Detail", user });
   } catch (error) {
     res.redirect(routes.home);
   }
 };
+
+// Edit Profile
 
 export const getEditProfile = (req, res) =>
   res.render("editProfile", { pageTitle: "Edit Profile" });
@@ -178,6 +202,8 @@ export const postEditProfile = async (req, res) => {
     res.redirect(routes.editProfile);
   }
 };
+
+// Change Password
 
 export const getChangePassword = (req, res) =>
   res.render("changePassword", { pageTitle: "Change Password" });

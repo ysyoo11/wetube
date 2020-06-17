@@ -506,6 +506,8 @@ a:visited {
     .video-detail__container .video__info button {
       width: 50px;
       margin-bottom: 25px; }
+    .video-detail__container .video__info .video__uploader a {
+      color: #3498db; }
     .video-detail__container .video__info .video__title,
     .video-detail__container .video__info .video__views,
     .video-detail__container .video__info .video__description {
@@ -581,7 +583,8 @@ a:visited {
        -moz-box-orient: vertical;
        -moz-box-direction: normal;
         -ms-flex-direction: column;
-            flex-direction: column; }
+            flex-direction: column;
+    margin-bottom: 50px; }
     .user-profile .user-profile__btns a:not(:last-child) {
       margin-bottom: 10px; }
     .user-profile .user-profile__btns button {
