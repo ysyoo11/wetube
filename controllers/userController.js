@@ -102,10 +102,13 @@ export const postFacebookLogin = (req, res) => {
 
 export const kakaoLogin = passport.authenticate("kakao");
 
-// 사용자가 카톡에서 돌아왔을 때 사용되는 함수
-export const kakaoLoginCallback = async (_, __, profile, done) => {
+export const kakaoLoginCallback = async (_, __, profile, cb) => {
   const {
-    _json: { id, avatar_url, name, email },
+    _json: {
+      id,
+      properties: { nickname, profile_image },
+      kakao_account: { email },
+    },
   } = profile;
   try {
     const user = await User.findOne({ email });
@@ -113,18 +116,18 @@ export const kakaoLoginCallback = async (_, __, profile, done) => {
     if (user) {
       user.kakaoId = id;
       user.save();
-      return done(null, user);
+      return cb(null, user);
     }
     const newUser = await User.create({
       email,
-      name,
-      githubId: id,
-      avatarUrl: avatar_url,
+      name: nickname,
+      kakaoId: id,
+      avatarUrl: profile_image,
     });
-    return done(null, newUser);
+    return cb(null, newUser);
   } catch (error) {
     console.log(error);
-    return done(user);
+    return cb(error);
   }
 };
 
