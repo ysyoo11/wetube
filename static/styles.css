@@ -479,7 +479,9 @@ a:visited {
   .videoPlayer:hover .videoPlayer__controls {
     opacity: 1; }
   .videoPlayer video {
-    max-width: 100%; }
+    max-width: 850px;
+    width: 100%;
+    height: auto; }
   .videoPlayer .videoPlayer__controls {
     opacity: 0;
     -webkit-transition: opacity 0.2s linear;

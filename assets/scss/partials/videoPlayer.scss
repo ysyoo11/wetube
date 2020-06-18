@@ -6,7 +6,9 @@
     }
   }
   video {
-    max-width: 100%;
+    max-width: 850px;
+    width: 100%;
+    height: auto;
   }
   .videoPlayer__controls {
     opacity: 0;
