@@ -7,6 +7,12 @@
     width: 100%;
     max-width: 320px;
     margin-bottom: 50px;
+    input.edit-title,
+    textarea.edit-description,
+    input.edit-name,
+    input.edit-email {
+      margin-top: 10px;
+    }
     input:not([type="file"]),
     .fileUpload {
       display: block;

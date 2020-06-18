@@ -72,12 +72,21 @@ export const getEditVideo = async (req, res) => {
   } = req;
   try {
     const video = await Video.findById(id);
-    if (video.creator !== req.user.id) {
+    console.log(video.creator);
+    console.log(req.user.id);
+    console.log(typeof video.creator);
+    console.log(typeof req.user.id);
+    if (String(video.creator) !== req.user.id) {
+      // 여기서 String 하고 괄호 안에 video.creator을 해준 이유는,
+      // video.creator 의 type은 Object 이고, req.user의 type은 String 이기 때문.
+      // console.log(typeof video.creator), console.log(typeof req.user)을 해보면 알 수 있다.
+      // Video.js에서 creator의 type을 Object 라고 해놨었다.
       throw Error();
     } else {
       res.render("editVideo", { pageTitle: `Edit ${video.title}`, video });
     }
   } catch (error) {
+    console.log(error);
     res.redirect(routes.home);
   }
 };

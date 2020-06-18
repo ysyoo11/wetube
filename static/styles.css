@@ -350,6 +350,11 @@ a:visited {
     width: 100%;
     max-width: 320px;
     margin-bottom: 50px; }
+    .form-container form input.edit-title,
+    .form-container form textarea.edit-description,
+    .form-container form input.edit-name,
+    .form-container form input.edit-email {
+      margin-top: 10px; }
     .form-container form input:not([type="file"]),
     .form-container form .fileUpload {
       display: block;
