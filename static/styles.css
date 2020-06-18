@@ -475,11 +475,12 @@ a:visited {
   margin-bottom: 10px; }
 
 .videoPlayer {
-  position: relative; }
+  position: relative;
+  max-width: 850px; }
   .videoPlayer:hover .videoPlayer__controls {
     opacity: 1; }
   .videoPlayer video {
-    max-width: 850px;
+    max-width: 100%;
     width: 100%;
     height: auto; }
   .videoPlayer .videoPlayer__controls {
