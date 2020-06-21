@@ -35,6 +35,10 @@ const FB_CALLBACK = "/auth/facebook/callback";
 const KT = "/auth/kakao";
 const KT_CALLBACK = "/oauth";
 
+// API
+const API = "/api";
+const REGISTER_VIEW = "/:id/view";
+
 // Object 만들기
 const routes = {
   home: HOME,
@@ -82,6 +86,8 @@ const routes = {
   facebookCallback: FB_CALLBACK,
   kakaotalk: KT,
   kakaotalkCallback: KT_CALLBACK,
+  api: API,
+  registerView: REGISTER_VIEW,
 };
 
 export default routes;
