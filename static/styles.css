@@ -164,7 +164,7 @@ main {
   min-height: 70vh; }
 
 button,
-input :not([type="file"]),
+input:not([type="file"]),
 textarea,
 .fileUpload {
   padding: 7px 10px;
@@ -178,24 +178,27 @@ textarea,
   font-weight: 600;
   background-color: white;
   max-width: 320px;
-  resize: none; }
-  button::-webkit-input-placeholder, input :not([type="file"])::-webkit-input-placeholder, textarea::-webkit-input-placeholder, .fileUpload::-webkit-input-placeholder {
+  resize: none;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+     -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
+  button::-webkit-input-placeholder, input:not([type="file"])::-webkit-input-placeholder, textarea::-webkit-input-placeholder, .fileUpload::-webkit-input-placeholder {
     font-weight: 300;
     color: rgba(0, 0, 0, 0.7); }
-  button:-moz-placeholder, input :not([type="file"]):-moz-placeholder, textarea:-moz-placeholder, .fileUpload:-moz-placeholder {
+  button:-moz-placeholder, input:not([type="file"]):-moz-placeholder, textarea:-moz-placeholder, .fileUpload:-moz-placeholder {
     font-weight: 300;
     color: rgba(0, 0, 0, 0.7); }
-  button::-moz-placeholder, input :not([type="file"])::-moz-placeholder, textarea::-moz-placeholder, .fileUpload::-moz-placeholder {
+  button::-moz-placeholder, input:not([type="file"])::-moz-placeholder, textarea::-moz-placeholder, .fileUpload::-moz-placeholder {
     font-weight: 300;
     color: rgba(0, 0, 0, 0.7); }
-  button:-ms-input-placeholder, input :not([type="file"]):-ms-input-placeholder, textarea:-ms-input-placeholder, .fileUpload:-ms-input-placeholder {
+  button:-ms-input-placeholder, input:not([type="file"]):-ms-input-placeholder, textarea:-ms-input-placeholder, .fileUpload:-ms-input-placeholder {
     font-weight: 300;
     color: rgba(0, 0, 0, 0.7); }
-  button::-ms-input-placeholder, input :not([type="file"])::-ms-input-placeholder, textarea::-ms-input-placeholder, .fileUpload::-ms-input-placeholder {
+  button::-ms-input-placeholder, input:not([type="file"])::-ms-input-placeholder, textarea::-ms-input-placeholder, .fileUpload::-ms-input-placeholder {
     font-weight: 300;
     color: rgba(0, 0, 0, 0.7); }
   button::placeholder,
-  input :not([type="file"])::placeholder,
+  input:not([type="file"])::placeholder,
   textarea::placeholder,
   .fileUpload::placeholder {
     font-weight: 300;
@@ -437,9 +440,12 @@ a:visited {
             align-items: center; }
     .social-login button:not(:last-child) {
       margin-bottom: 15px; }
+    .social-login button i {
+      font-size: 18px;
+      margin-right: 10px; }
     .social-login button span {
       margin-right: 10px;
-      font-size: 20px; }
+      font-size: 14px; }
   .social-login .social-login--github {
     background-color: #444444; }
   .social-login .social-login--facebook {
@@ -616,9 +622,29 @@ i {
     .video-detail__container .video__info .video__description {
       font-size: 16px; }
   .video-detail__container .video__comments {
-    margin-top: 25px; }
+    margin-top: 25px;
+    text-align: center; }
     .video-detail__container .video__comments .video__comment-number {
       font-size: 18px; }
+    .video-detail__container .video__comments .add__comment {
+      margin-top: 25px;
+      width: 100%; }
+      .video-detail__container .video__comments .add__comment input {
+        width: 100%; }
+    .video-detail__container .video__comments .video__comments-list {
+      margin-top: 50px; }
+      .video-detail__container .video__comments .video__comments-list li {
+        color: white;
+        background-color: #3498db;
+        padding: 15px 30px;
+        -webkit-border-radius: 20px;
+           -moz-border-radius: 20px;
+                border-radius: 20px;
+        -webkit-border-bottom-left-radius: 0px;
+           -moz-border-radius-bottomleft: 0px;
+                border-bottom-left-radius: 0px; }
+        .video-detail__container .video__comments .video__comments-list li:not(last-child) {
+          margin-bottom: 15px; }
 
 .user-profile {
   width: 100%;

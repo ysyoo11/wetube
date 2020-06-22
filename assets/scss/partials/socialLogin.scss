@@ -12,9 +12,13 @@
     &:not(:last-child) {
       margin-bottom: 15px;
     }
+    i {
+      font-size: 18px;
+      margin-right: 10px;
+    }
     span {
       margin-right: 10px;
-      font-size: 20px;
+      font-size: 14px;
     }
   }
   .social-login--github {

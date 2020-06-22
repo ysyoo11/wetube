@@ -38,6 +38,7 @@ const KT_CALLBACK = "/oauth";
 // API
 const API = "/api";
 const REGISTER_VIEW = "/:id/view";
+const ADD_COMMENT = "/:id/comment";
 
 // Object 만들기
 const routes = {
@@ -88,6 +89,7 @@ const routes = {
   kakaotalkCallback: KT_CALLBACK,
   api: API,
   registerView: REGISTER_VIEW,
+  addComment: ADD_COMMENT,
 };
 
 export default routes;
