@@ -39,6 +39,7 @@ const KT_CALLBACK = "/oauth";
 const API = "/api";
 const REGISTER_VIEW = "/:id/view";
 const ADD_COMMENT = "/:id/comment";
+const DELETE_COMMENT = "/:id/comment-delete";
 
 // Object 만들기
 const routes = {
@@ -90,6 +91,7 @@ const routes = {
   api: API,
   registerView: REGISTER_VIEW,
   addComment: ADD_COMMENT,
+  deleteComment: DELETE_COMMENT,
 };
 
 export default routes;

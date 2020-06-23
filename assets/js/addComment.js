@@ -1,19 +1,25 @@
 import axios from "axios";
+import { handleClick } from "./deleteComment";
 
+const commentNumber = document.getElementById("jsCommentNumber");
 const addCommentForm = document.getElementById("jsAddComment");
 const commentList = document.getElementById("jsCommentList");
-const commentNumber = document.getElementById("jsCommentNumber");
 
 const increaseNumber = () => {
   commentNumber.innerHTML = parseInt(commentNumber.innerHTML, 10) + 1;
 };
 
-const addComment = (comment) => {
+const addComment = (comment, commentId) => {
   const li = document.createElement("li");
   const span = document.createElement("span");
+  const btn = document.createElement("button");
   span.innerHTML = comment;
+  btn.innerHTML = "×";
+  btn.setAttribute("value", commentId);
   li.appendChild(span);
+  span.appendChild(btn);
   commentList.prepend(li);
+  btn.addEventListener("click", handleClick);
   increaseNumber();
 };
 
@@ -27,8 +33,9 @@ const sendComment = async (comment) => {
       // 이것은 comment라는 body에 들어갈 것이다. (참고 videoController Add Comment 부분)
     },
   });
+  const commentId = response.data._id;
   if (response.status === 200) {
-    addComment(comment);
+    addComment(comment, commentId);
   }
 };
 

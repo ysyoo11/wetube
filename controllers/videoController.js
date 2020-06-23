@@ -9,6 +9,7 @@ export const home = async (req, res) => {
     const videos = await Video.find({}).sort({ _id: -1 });
     res.render("home", { pageTitle: "Home", videos });
   } catch (error) {
+    console.log(error);
     res.render("home", { pageTitle: "Home", videos: [] });
   }
 };
@@ -38,10 +39,10 @@ export const getUpload = (req, res) =>
 export const postUpload = async (req, res) => {
   const {
     body: { title, description },
-    file: { path },
+    file: { location },
   } = req;
   const newVideo = await Video.create({
-    fileUrl: path,
+    fileUrl: location,
     title,
     description,
     creator: req.user.id,
@@ -126,9 +127,13 @@ export const postRegisterView = async (req, res) => {
   } = req;
   try {
     const video = await Video.findById(id);
+    // video를 id로 찾아내고
     video.views += 1;
+    // video 의 views에 1을 추가해준다
     video.save();
+    // 그리고 갱신한 video의 정보를 저장
     res.status(200);
+    // 잘 동작했을 시에 okay라는 뜻의 status를 보내줌
   } catch (error) {
     res.status(400);
   } finally {
@@ -140,14 +145,12 @@ export const postRegisterView = async (req, res) => {
 
 export const postAddComment = async (req, res) => {
   const {
-    // id는 URL에서 가져옴.
     params: { id },
-    // comment는 body에서 가져옴.
     body: { comment },
     user,
   } = req;
   try {
-    const video = await Video.findById(id);
+    const video = await (await Video.findById(id)).populate("comments");
     const newComment = await Comment.create({
       text: comment,
       creator: user.id,
@@ -155,7 +158,31 @@ export const postAddComment = async (req, res) => {
     // 작성한 comment의 id를 video comment에 새롭게 넣어 줌.
     video.comments.push(newComment.id);
     video.save();
+    const commentId = await Comment.findById(newComment.id);
+    res.send(JSON.stringify(commentId));
   } catch (error) {
+    res.status(400);
+  } finally {
+    res.end();
+  }
+};
+
+// Delete Comment
+
+export const postDeleteComment = async (req, res) => {
+  const {
+    params: { id },
+    user,
+  } = req;
+  try {
+    const comment = await Comment.findById(id);
+    if (String(comment.creator) !== user.id) {
+      throw Error();
+    } else {
+      await Comment.findOneAndRemove({ _id: id });
+    }
+  } catch (error) {
+    console.log(error);
     res.status(400);
   } finally {
     res.end();

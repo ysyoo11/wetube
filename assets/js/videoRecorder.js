@@ -23,6 +23,7 @@ const stopRecording = () => {
   streamObject.getAudioTracks()[0].stop();
 };
 
+// stream에서 가진 video를 recording하는 함수
 const startRecording = () => {
   videoRecorder = new MediaRecorder(streamObject);
   videoRecorder.start();
@@ -30,6 +31,8 @@ const startRecording = () => {
   recordBtn.addEventListener("click", stopRecording);
 };
 
+// user로부터 media를 얻어와서 video에 넣는 함수.
+// media devices navigator mdn 검색해서 참고.
 const getVideo = async () => {
   try {
     const stream = await navigator.mediaDevices.getUserMedia({
