@@ -59,9 +59,10 @@ export const videoDetail = async (req, res) => {
     params: { id },
   } = req;
   try {
-    const video = await Video.findById(id)
-      .populate("creator")
-      .populate("comments");
+    const video = await Video.findById(id).populate("creator").populate({
+      path: "comments",
+      populate: "creator",
+    });
     res.render("videoDetail", { pageTitle: video.title, video });
   } catch (error) {
     res.redirect(routes.home);
@@ -141,7 +142,7 @@ export const postRegisterView = async (req, res) => {
   }
 };
 
-// Add Comment
+// Add a Comment
 
 export const postAddComment = async (req, res) => {
   const {
@@ -150,15 +151,19 @@ export const postAddComment = async (req, res) => {
     user,
   } = req;
   try {
-    const video = await (await Video.findById(id)).populate("comments");
+    const video = await Video.findById(id)
+      .populate("comments")
+      .populate("creator");
     const newComment = await Comment.create({
       text: comment,
       creator: user.id,
     });
-    // 작성한 comment의 id를 video comment에 새롭게 넣어 줌.
+    // 작성한 comment의 id를 video comments에 새롭게 넣어 줌.
     video.comments.push(newComment.id);
     video.save();
-    const commentId = await Comment.findById(newComment.id);
+    const commentId = await Comment.findById(newComment.id).populate({
+      path: "creator",
+    });
     res.send(JSON.stringify(commentId));
   } catch (error) {
     res.status(400);
@@ -167,7 +172,7 @@ export const postAddComment = async (req, res) => {
   }
 };
 
-// Delete Comment
+// Delete a Comment
 
 export const postDeleteComment = async (req, res) => {
   const {

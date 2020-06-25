@@ -21,18 +21,30 @@ block content
                 a(href=routes.userDetail(video.creator.id))=video.creator.name
         .video__comments
             if video.comments.length === 1
-                span.video__comment-number
+                .video__comment-number
                     span#jsCommentNumber 1 
-                    |  comment
+                    span.comment-number-text comment
             else
-                span.video__comment-number
-                    span#jsCommentNumber=video.comments.length 
-                    |  comments
-            form.add__comment#jsAddComment
-                input(type="text", placeholder="Write a comment")
+                .video__comment-number
+                    span#jsCommentNumber=video.comments.length  
+                    span.comment-number-text comments
+            .video__write-comment
+                img.user-avatar(src=`/${loggedUser.avatarUrl}`)
+                form.add__comment#jsAddComment
+                    if loggedUser
+                        input(type="text", placeholder="Add a comment")
+                    else
+                        input(type="text", placeholder="You need to log in", disabled)
             ul.video__comments-list#jsCommentList
                 each comment in video.comments.reverse()
-                    li
-                        span#jsComment=comment.text 
-                            if loggedUser && (String(comment.creator) === loggedUser.id)
-                                button.jsDelBtn(value=comment.id)
+                    li.comments
+                        .comments__left-column
+                            img(src=`/${comment.creator.avatarUrl}`).comments__userAvatar#jsUserAvatar
+                            span.comments__userName=String(comment.creator.name)
+                        .comments__right-column
+                            .comments__text-box
+                                span#jsComment=comment.text 
+                            if loggedUser && (String(comment.creator.id) === loggedUser.id)
+                                .comments__icon
+                                    button.jsDelBtn(value=comment.id)
+                            

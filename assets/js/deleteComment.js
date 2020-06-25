@@ -10,9 +10,9 @@ const decreaseNumber = () => {
 };
 
 const delComment = (event) => {
-  const span = event.target.parentElement;
-  const li = span.parentElement;
-  commentList.removeChild(li);
+  const li = event.target.closest("li");
+  li.remove();
+
   decreaseNumber();
 };
 
@@ -21,9 +21,6 @@ export const handleClick = async (event) => {
   const response = await axios({
     url: `/api/${commentId}/comment-delete`,
     method: "POST",
-    // data: {
-    //   commentId,
-    // },
   });
   if (response.status === 200) {
     delComment(event);
