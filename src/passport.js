@@ -28,7 +28,7 @@ passport.use(
     {
       clientID: process.env.FB_ID,
       clientSecret: process.env.FB_SECRET,
-      callbackURL: `https://aa667e518048.ngrok.io${routes.facebookCallback}`,
+      callbackURL: `https://fathomless-depths-83549.herokuapp.com${routes.facebookCallback}`,
       profileFields: ["id", "displayName", "photos", "email"],
       scope: ["public_profile", "email"],
     },

@@ -10,8 +10,10 @@ export const postJoin = async (req, res, next) => {
     body: { name, email, password, password2 },
   } = req;
   if (password !== password2) {
+    req.flash("error", "Please make sure your passwords match.");
     res.status(400);
     res.render("join", { pageTitle: "Join" });
+    // eslint-disable-next-line no-empty
   } else {
   }
   try {
@@ -36,22 +38,27 @@ export const postLogin = passport.authenticate("local", {
   // 여기서 passport.authenticate 는 username(여기서는 email)과 password로 인증하도록 설정되어 있다.
   failureRedirect: routes.login,
   successRedirect: routes.home,
+  successFlash: "Welcome!",
+  failureFlash: "Cannot log in. Please check your email and/or password.",
 });
 
 // Github Log In
 
-export const githubLogin = passport.authenticate("github");
+export const githubLogin = passport.authenticate("github", {
+  successFlash: "Welcome!",
+  failureFlash: "Cannot log in. Please check your Github account.",
+});
 
 // 사용자가 깃헙에서 돌아왔을 때 사용되는 함수
 export const githubLoginCallback = async (_, __, profile, cb) => {
   // 사용하지 않는 변수가 있을 경우에는 위와 같이 밑줄 표시. 그냥 삭제하면 안 된다. 순서대로 변수를 인식하기 때문.
   const {
+    // eslint-disable-next-line camelcase
     _json: { id, avatar_url, name, email },
   } = profile;
   try {
     const user = await User.findOne({ email });
     // 사용자의 email과 깃헙에서 온 email이 동일한지 확인해서 user를 찾는 식 (same as {email: email})
-    console.log(user);
     if (user) {
       user.githubId = id;
       user.save();
@@ -65,6 +72,7 @@ export const githubLoginCallback = async (_, __, profile, cb) => {
     });
     return cb(null, newUser);
   } catch (error) {
+    // eslint-disable-next-line no-undef
     return cb(user);
   }
 };
@@ -75,11 +83,14 @@ export const postGithubLogin = (req, res) => {
 
 // Facebook Log In
 
-export const facebookLogin = passport.authenticate("facebook");
+export const facebookLogin = passport.authenticate("facebook", {
+  successFlash: "Welcome!",
+  failureFlash: "Cannot log in. Please check your Facebook account.",
+});
 
 export const facebookLoginCallback = async (_, __, profile, cb) => {
   const {
-    _json: { id, avatar_url, name, email },
+    _json: { id, name, email },
   } = profile;
   try {
     const user = await User.findOne({ email });
@@ -99,6 +110,7 @@ export const facebookLoginCallback = async (_, __, profile, cb) => {
     });
     return cb(null, newUser);
   } catch (error) {
+    // eslint-disable-next-line no-undef
     return cb(user);
   }
 };
@@ -109,12 +121,16 @@ export const postFacebookLogin = (req, res) => {
 
 // Kakao Log In
 
-export const kakaoLogin = passport.authenticate("kakao");
+export const kakaoLogin = passport.authenticate("kakao", {
+  successFlash: "Welcome!",
+  failureFlash: "Cannot log in. Please check your KakaoTalk account.",
+});
 
 export const kakaoLoginCallback = async (_, __, profile, cb) => {
   const {
     _json: {
       id,
+      // eslint-disable-next-line camelcase
       properties: { nickname, profile_image },
       kakao_account: { email },
     },
@@ -147,6 +163,7 @@ export const postKakaoLogin = (req, res) => {
 // Log Out
 
 export const logout = (req, res) => {
+  req.flash("info", "Logged out. See you later.");
   req.logout();
   res.redirect(routes.home);
 };
@@ -171,9 +188,9 @@ export const userDetail = async (req, res) => {
   } = req;
   try {
     const user = await User.findById(id).populate("videos");
-    console.log(user);
     res.render("userDetail", { pageTitle: "User Detail", user });
   } catch (error) {
+    req.flash("error", "User not found");
     res.redirect(routes.home);
   }
 };
@@ -197,8 +214,10 @@ export const postEditProfile = async (req, res) => {
       // 즉, 만약 유저가 파일을 추가하지 않으면 avatarUrl을 중복해서 쓰길 원하지 않기 때문에 현재 있는 것을 준다.
       // 항상 request 객체 안에는 user가 있다는 것을 명심할 것. (내가 인증하면)
     });
+    req.flash("success", "User information is updated.");
     res.redirect(routes.me);
   } catch (error) {
+    req.flash("error", "Can't update your information.");
     res.redirect(routes.editProfile);
   }
 };
@@ -214,6 +233,7 @@ export const postChangePassword = async (req, res) => {
   } = req;
   try {
     if (newPassword !== newPassword2) {
+      req.flash("error", "Please make sure your passwords match.");
       res.status(400);
       res.redirect(routes.changePassword);
       return;
@@ -222,6 +242,7 @@ export const postChangePassword = async (req, res) => {
     // changePassword 는 passport-local-mongoose가 갖고 있는 함수
     res.redirect(routes.me);
   } catch (error) {
+    req.flash("error", "Can't change the password.");
     res.status(400);
     res.redirect(`/users${routes.changePassword}`);
   }
