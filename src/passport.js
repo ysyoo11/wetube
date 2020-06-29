@@ -40,7 +40,7 @@ passport.use(
   new KakaoStrategy(
     {
       clientID: process.env.KT_ID,
-      callbackURL: `http://localhost:4000${routes.kakaotalkCallback}`,
+      callbackURL: `https://fathomless-depths-83549.herokuapp.com${routes.kakaotalkCallback}`,
     },
     kakaoLoginCallback
   )
