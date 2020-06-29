@@ -17,7 +17,7 @@ passport.use(
     {
       clientID: process.env.GH_ID,
       clientSecret: process.env.GH_SECRET,
-      callbackURL: `https://fathomless-depths-83549.herokuapp.com${routes.gitHubCallback}`,
+      callbackURL: `https://fathomless-depths-83549.herokuapp.com${routes.gitHubCallback}`,
     },
     githubLoginCallback
   )
@@ -28,7 +28,7 @@ passport.use(
     {
       clientID: process.env.FB_ID,
       clientSecret: process.env.FB_SECRET,
-      callbackURL: `https://fathomless-depths-83549.herokuapp.com${routes.facebookCallback}`,
+      callbackURL: `https://fathomless-depths-83549.herokuapp.com${routes.facebookCallback}`,
       profileFields: ["id", "displayName", "photos", "email"],
       scope: ["public_profile", "email"],
     },
