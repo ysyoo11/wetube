@@ -169,10 +169,15 @@ export const lineLogin = passport.authenticate("line", {
 
 export const lineLoginCallback = async (_, __, profile, cb) => {
   const {
-    _json: { id, name, email },
+    _json: {
+      id,
+      name,
+      picture,
+      openid: { email },
+    },
   } = profile;
   try {
-    const user = await User.findOne({ lineId: profile.id });
+    const user = await User.findOne({ email });
     console.log(user);
     if (user) {
       user.lineId = id;
@@ -183,6 +188,7 @@ export const lineLoginCallback = async (_, __, profile, cb) => {
       email,
       name,
       lineId: id,
+      avatarUrl: picture,
     });
     return cb(null, newUser);
   } catch (error) {
