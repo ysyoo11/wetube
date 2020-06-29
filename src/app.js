@@ -1,15 +1,16 @@
+import "core-js";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
-import { localsMiddleware } from "./middlewares";
 import passport from "passport";
 import path from "path";
 import flash from "express-flash";
 import mongoose from "mongoose";
 import session from "express-session";
 import MongoStore from "connect-mongo";
+import { localsMiddleware } from "./middlewares";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import globalRouter from "./routers/globalRouter";

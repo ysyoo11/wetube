@@ -31,7 +31,7 @@ export const localsMiddleware = (req, res, next) => {
   res.locals.siteName = "YooTube";
   res.locals.routes = routes;
   res.locals.loggedUser = req.user || null;
-  // req.user:　passport가 유저를 로그인 시킬 때 쿠키, serialize, deserialize 등의 기능 전부 지원해주고,
+  // req.user: passport가 유저를 로그인 시킬 때 쿠키, serialize, deserialize 등의 기능 전부 지원해주고,
   // user가 담긴 object를 요청(request)에 올려줄 것이다.
   // 먼저 이렇게 작성해야 우리 template들이 이 user에 접근 가능해진다.
   next();
