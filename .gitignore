@@ -122,3 +122,4 @@ dist
 uploads
 yarn.lock
 static
+build

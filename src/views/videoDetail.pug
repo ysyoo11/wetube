@@ -29,7 +29,7 @@ block content
                     span#jsCommentNumber=video.comments.length  
                     span.comment-number-text comments
             .video__write-comment
-                img.user-avatar(src=`/${loggedUser.avatarUrl}`)
+                img.user-avatar(src=`${loggedUser.avatarUrl}`)
                 form.add__comment#jsAddComment
                     if loggedUser
                         input(type="text", placeholder="Add a comment")
@@ -39,12 +39,13 @@ block content
                 each comment in video.comments.reverse()
                     li.comments
                         .comments__left-column
-                            img(src=`/${comment.creator.avatarUrl}`).comments__userAvatar#jsUserAvatar
-                            span.comments__userName=String(comment.creator.name)
+                            a(href=routes.userDetail(`${comment.creator.id}`))
+                                img(src=`${comment.creator.avatarUrl}`).comments__userAvatar#jsUserAvatar
                         .comments__right-column
+                            span.comments__userName=String(comment.creator.name)
                             .comments__text-box
                                 span#jsComment=comment.text 
-                            if loggedUser && (String(comment.creator.id) === loggedUser.id)
-                                .comments__icon
-                                    button.jsDelBtn(value=comment.id)
+                                if loggedUser && (String(comment.creator.id) === loggedUser.id)
+                                    .comments__icon
+                                        button.jsDelBtn(value=comment.id)
                             

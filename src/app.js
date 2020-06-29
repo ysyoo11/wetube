@@ -5,6 +5,8 @@ import helmet from "helmet";
 import morgan from "morgan";
 import { localsMiddleware } from "./middlewares";
 import passport from "passport";
+import path from "path";
+import flash from "express-flash";
 import mongoose from "mongoose";
 import session from "express-session";
 import MongoStore from "connect-mongo";
@@ -22,8 +24,8 @@ const CookieStore = MongoStore(session);
 
 app.use(helmet());
 app.set("view engine", "pug");
-app.use("/uploads", express.static("uploads"));
-app.use("/static", express.static("static"));
+app.set("views", path.join(__dirname, "views"));
+app.use("/static", express.static(path.join(__dirname, "static")));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -38,6 +40,8 @@ app.use(
     // CookieStore를 우리의 데이터베이스에 연결하기 위해 이 연결을 사용하겠다는 뜻
   })
 );
+app.use(flash());
+
 app.use(passport.initialize());
 // 위에 cookieParser에서 실행된 cookie가 쭉 내려와서 passport는 초기화(initialize)되고,
 app.use(passport.session());

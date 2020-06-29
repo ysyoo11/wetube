@@ -1,4 +1,5 @@
 import axios from "axios";
+import routes from "../../routes";
 import { handleClick } from "./deleteComment";
 
 const commentNumber = document.getElementById("jsCommentNumber");
@@ -20,6 +21,7 @@ const addComment = (comment, newComment) => {
   const iconBox = document.createElement("div");
   const delBtn = document.createElement("button");
   const img = document.createElement("img");
+  const userLink = document.createElement("a");
 
   li.classList.add("comments");
   leftColumn.classList.add("comments__left-column");
@@ -31,17 +33,19 @@ const addComment = (comment, newComment) => {
   img.classList.add("comments__userAvatar");
 
   li.appendChild(leftColumn);
-  leftColumn.appendChild(img);
-  leftColumn.appendChild(userName);
+  leftColumn.appendChild(userLink);
+  userLink.appendChild(img);
 
   li.appendChild(rightColumn);
+  rightColumn.appendChild(userName);
   rightColumn.appendChild(textBox);
   textBox.appendChild(span);
-  rightColumn.appendChild(iconBox);
+  textBox.appendChild(iconBox);
   iconBox.appendChild(delBtn);
 
-  img.setAttribute("src", `/${newComment.creator.avatarUrl}`);
+  img.setAttribute("src", `${newComment.creator.avatarUrl}`);
   userName.innerHTML = newComment.creator.name;
+  userLink.setAttribute("href", routes.userDetail(newComment.creator._id));
 
   delBtn.innerHTML = "×";
   delBtn.setAttribute("value", newComment._id);
@@ -62,6 +66,7 @@ const sendComment = async (comment) => {
     },
   });
   const newComment = response.data;
+  console.log(newComment);
   if (response.status === 200) {
     addComment(comment, newComment);
   }
