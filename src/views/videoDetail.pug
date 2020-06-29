@@ -29,7 +29,8 @@ block content
                     span#jsCommentNumber=video.comments.length  
                     span.comment-number-text comments
             .video__write-comment
-                img.user-avatar(src=`${loggedUser.avatarUrl}`)
+                if loggedUser
+                    img.user-avatar(src=`${loggedUser.avatarUrl}`)
                 form.add__comment#jsAddComment
                     if loggedUser
                         input(type="text", placeholder="Add a comment")
