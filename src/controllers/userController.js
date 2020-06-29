@@ -172,7 +172,7 @@ export const lineLoginCallback = async (_, __, profile, cb) => {
     _json: { id, name, email },
   } = profile;
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ lineId: profile.id });
     console.log(user);
     if (user) {
       user.lineId = id;
