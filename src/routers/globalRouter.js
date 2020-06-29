@@ -14,6 +14,7 @@ import {
   facebookLogin,
   postFacebookLogin,
   kakaoLogin,
+  lineLogin,
   postKakaoLogin,
   postLineLogin,
 } from "../controllers/userController";
@@ -56,6 +57,8 @@ globalRouter.get(
   passport.authenticate("kakao", { failureRedirect: "/login" }),
   postKakaoLogin
 );
+
+globalRouter.get(routes.line, lineLogin);
 
 globalRouter.get(
   routes.lineCallback,
