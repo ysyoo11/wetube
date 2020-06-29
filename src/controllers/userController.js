@@ -160,6 +160,41 @@ export const postKakaoLogin = (req, res) => {
   res.redirect(routes.home);
 };
 
+// Line Log In
+
+export const lineLogin = passport.authenticate("line", {
+  successFlash: "Welcome!",
+  failureFlash: "Cannot log in. Please check your LINE account.",
+});
+
+export const lineLoginCallback = async (_, __, profile, cb) => {
+  const {
+    _json: { id, name, email },
+  } = profile;
+  try {
+    const user = await User.findOne({ email });
+    console.log(user);
+    if (user) {
+      user.lineId = id;
+      user.save();
+      return cb(null, user);
+    }
+    const newUser = await User.create({
+      email,
+      name,
+      lineId: id,
+    });
+    return cb(null, newUser);
+  } catch (error) {
+    console.log(error);
+    return cb(error);
+  }
+};
+
+export const postLineLogin = (req, res) => {
+  res.redirect(routes.home);
+};
+
 // Log Out
 
 export const logout = (req, res) => {

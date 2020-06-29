@@ -8,6 +8,7 @@ const UserSchema = new mongoose.Schema({
   facebookId: Number,
   githubId: Number,
   kakaoId: Number,
+  lineId: Number,
   comments: [
     {
       type: mongoose.Schema.Types.ObjectId,

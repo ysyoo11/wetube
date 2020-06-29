@@ -35,6 +35,10 @@ const FB_CALLBACK = "/auth/facebook/callback";
 const KT = "/auth/kakao";
 const KT_CALLBACK = "/oauth";
 
+// Line
+const LINE = "/auth/line";
+const LINE_CALLBACK = "/auth/line/callback";
+
 // API
 const API = "/api";
 const REGISTER_VIEW = "/:id/view";
@@ -88,6 +92,8 @@ const routes = {
   facebookCallback: FB_CALLBACK,
   kakaotalk: KT,
   kakaotalkCallback: KT_CALLBACK,
+  line: LINE,
+  lineCallback: LINE_CALLBACK,
   api: API,
   registerView: REGISTER_VIEW,
   addComment: ADD_COMMENT,
