@@ -188,7 +188,6 @@ export const googleLoginCallback = async (_, __, profile, done) => {
 };
 
 export const postGoogleLogin = (req, res) => {
-  req.flash("success", "Welcome!");
   res.redirect(routes.home);
 };
 
