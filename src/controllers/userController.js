@@ -13,8 +13,6 @@ export const postJoin = async (req, res, next) => {
     req.flash("error", "Please make sure your passwords match.");
     res.status(400);
     res.render("join", { pageTitle: "Join" });
-    // eslint-disable-next-line no-empty
-  } else {
   }
   try {
     const user = await User({
@@ -53,7 +51,6 @@ export const githubLogin = passport.authenticate("github", {
 export const githubLoginCallback = async (_, __, profile, cb) => {
   // 사용하지 않는 변수가 있을 경우에는 위와 같이 밑줄 표시. 그냥 삭제하면 안 된다. 순서대로 변수를 인식하기 때문.
   const {
-    // eslint-disable-next-line camelcase
     _json: { id, avatar_url, name, email },
   } = profile;
   try {
@@ -72,7 +69,6 @@ export const githubLoginCallback = async (_, __, profile, cb) => {
     });
     return cb(null, newUser);
   } catch (error) {
-    // eslint-disable-next-line no-undef
     return cb(user);
   }
 };
@@ -92,7 +88,6 @@ export const kakaoLoginCallback = async (_, __, profile, cb) => {
   const {
     _json: {
       id,
-      // eslint-disable-next-line camelcase
       properties: { nickname, profile_image },
       kakao_account: { email },
     },
@@ -130,16 +125,9 @@ export const lineLogin = passport.authenticate("line", {
 });
 
 export const lineLoginCallback = async (_, __, profile, cb) => {
-  const {
-    _json: {
-      id,
-      name,
-      picture,
-      openid: { email },
-    },
-  } = profile;
+  const { id, displayName, pictureUrl } = profile;
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ lineId: id });
     console.log(user);
     if (user) {
       user.lineId = id;
@@ -147,10 +135,9 @@ export const lineLoginCallback = async (_, __, profile, cb) => {
       return cb(null, user);
     }
     const newUser = await User.create({
-      email,
-      name,
+      name: displayName,
       lineId: id,
-      avatarUrl: picture,
+      avatarUrl: pictureUrl,
     });
     return cb(null, newUser);
   } catch (error) {
@@ -201,6 +188,7 @@ export const googleLoginCallback = async (_, __, profile, done) => {
 };
 
 export const postGoogleLogin = (req, res) => {
+  req.flash("success", "Welcome!");
   res.redirect(routes.home);
 };
 

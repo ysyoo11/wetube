@@ -27,6 +27,7 @@
     .videoPlayer__column:first-child {
       display: flex;
       align-items: center;
+      font-size: 14px;
       .videoPlayer__volume {
         position: absolute;
         padding: 0;
@@ -47,7 +48,7 @@
         }
         &::-webkit-slider-thumb {
           all: unset;
-          background-color: $red;
+          background-color: $theme;
           height: 15px;
           width: 15px;
           border-radius: 50%;

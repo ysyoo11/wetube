@@ -19,7 +19,7 @@ passport.use(
     {
       clientID: process.env.GH_ID,
       clientSecret: process.env.GH_SECRET,
-      callbackURL: `http://localhost:4000${routes.gitHubCallback}`,
+      callbackURL: `https://fathomless-depths-83549.herokuapp.com${routes.gitHubCallback}`,
     },
     githubLoginCallback
   )
@@ -53,7 +53,7 @@ passport.use(
     {
       clientID: process.env.G_ID,
       clientSecret: process.env.G_SECRET,
-      callbackURL: `http://localhost:4000${routes.googleCallback}`,
+      callbackURL: `https://fathomless-depths-83549.herokuapp.com${routes.googleCallback}`,
     },
     googleLoginCallback
   )
