@@ -19,7 +19,7 @@ passport.use(
     {
       clientID: process.env.GH_ID,
       clientSecret: process.env.GH_SECRET,
-      callbackURL: `http://localhost:4000${routes.gitHubCallback}`,
+      callbackURL: `http://localhost:4000${routes.gitHubCallback}`,
     },
     githubLoginCallback
   )
@@ -29,7 +29,7 @@ passport.use(
   new KakaoStrategy(
     {
       clientID: process.env.KT_ID,
-      callbackURL: `http://localhost:4000${routes.kakaotalkCallback}`,
+      callbackURL: `https://fathomless-depths-83549.herokuapp.com${routes.kakaotalkCallback}`,
     },
     kakaoLoginCallback
   )
@@ -40,7 +40,7 @@ passport.use(
     {
       channelID: process.env.LINE_ID,
       channelSecret: process.env.LINE_SECRET,
-      callbackURL: `http://localhost:4000${routes.lineCallback}`,
+      callbackURL: `https://fathomless-depths-83549.herokuapp.com${routes.lineCallback}`,
       scope: ["profile", "openid", "email"],
       botPrompt: "normal",
     },
@@ -59,9 +59,19 @@ passport.use(
   )
 );
 
-passport.serializeUser(User.serializeUser());
-// serialization: 어떤 field가 쿠키에 포함될 것인지 알려주는 역할
-// 여기서는 "이봐 passport, 쿠키에는 오로지 user.id만 담아서 보내도록 해" 라고 지시하는 것.
-passport.deserializeUser(User.deserializeUser());
+// passport.serializeUser(User.serializeUser());
+// // serialization: 어떤 field가 쿠키에 포함될 것인지 알려주는 역할
+// // 여기서는 "이봐 passport, 쿠키에는 오로지 user.id만 담아서 보내도록 해" 라고 지시하는 것.
+// passport.deserializeUser(User.deserializeUser());
 // 어느 사용자인지 어떻게 찾는가?
 // 그 쿠키의 정보를 어떻게 사용자로 전환하는가?
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+  User.findById(id).then((user) => {
+    done(null, user);
+  });
+});
