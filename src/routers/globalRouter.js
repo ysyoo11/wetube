@@ -11,8 +11,6 @@ import {
   githubLogin,
   postGithubLogin,
   getMe,
-  facebookLogin,
-  postFacebookLogin,
   kakaoLogin,
   lineLogin,
   postKakaoLogin,
@@ -42,14 +40,6 @@ globalRouter.get(
   routes.gitHubCallback,
   passport.authenticate("github", { failureRedirect: "/login" }),
   postGithubLogin
-);
-
-globalRouter.get(routes.facebook, facebookLogin);
-
-globalRouter.get(
-  routes.facebookCallback,
-  passport.authenticate("facebook", { failureRedirect: "/login" }),
-  postFacebookLogin
 );
 
 globalRouter.get(routes.kakaotalk, kakaoLogin);

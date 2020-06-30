@@ -27,10 +27,6 @@ const DELETE_VIDEO = "/:id/delete";
 const GITHUB = "/auth/github";
 const GITHUB_CALLBACK = "/auth/github/callback";
 
-// Facebook
-const FB = "/auth/facebook";
-const FB_CALLBACK = "/auth/facebook/callback";
-
 // Kakaotalk
 const KT = "/auth/kakao";
 const KT_CALLBACK = "/oauth";
@@ -92,8 +88,6 @@ const routes = {
   },
   gitHub: GITHUB,
   gitHubCallback: GITHUB_CALLBACK,
-  facebook: FB,
-  facebookCallback: FB_CALLBACK,
   kakaotalk: KT,
   kakaotalkCallback: KT_CALLBACK,
   line: LINE,

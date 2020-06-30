@@ -81,44 +81,6 @@ export const postGithubLogin = (req, res) => {
   res.redirect(routes.home);
 };
 
-// Facebook Log In
-
-export const facebookLogin = passport.authenticate("facebook", {
-  successFlash: "Welcome!",
-  failureFlash: "Cannot log in. Please check your Facebook account.",
-});
-
-export const facebookLoginCallback = async (_, __, profile, cb) => {
-  const {
-    _json: { id, name, email },
-  } = profile;
-  try {
-    const user = await User.findOne({ email });
-    // 사용자의 email과 FB에서 온 email이 동일한지 확인해서 user를 찾는 식 (same as {email: email})
-    console.log(user);
-    if (user) {
-      user.facebookId = id;
-      user.avatarUrl = `http://graph.facebook.com/${id}/picture?type=large`;
-      user.save();
-      return cb(null, user);
-    }
-    const newUser = await User.create({
-      email,
-      name,
-      facebookId: id,
-      avatarUrl: `http://graph.facebook.com/${id}/picture?type=large`,
-    });
-    return cb(null, newUser);
-  } catch (error) {
-    // eslint-disable-next-line no-undef
-    return cb(user);
-  }
-};
-
-export const postFacebookLogin = (req, res) => {
-  res.redirect(routes.home);
-};
-
 // Kakao Log In
 
 export const kakaoLogin = passport.authenticate("kakao", {
@@ -204,32 +166,37 @@ export const postLineLogin = (req, res) => {
 // Google Log In
 
 export const googleLogin = passport.authenticate("google", {
-  scope: "https://www.googleapis.com/auth/plus.login",
+  scope: [
+    "profile",
+    "https://www.googleapis.com/auth/plus.login",
+    "https://www.googleapis.com/auth/plus.profile.emails.read",
+  ],
 });
 
-export const googleLoginCallback = async (_, __, profile, cb) => {
-  //왜그러는지 모르겠지만, 이메일을 안줌
+export const googleLoginCallback = async (_, __, profile, done) => {
   const {
-    _json: { name },
+    _json: { name, picture },
     id,
-    email,
   } = profile;
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ googleId: id });
+    console.log(user);
     if (user) {
       user.googleId = id;
       user.save();
-      //에러 없음, 유저찾음
-      return cb(null, user);
+      return done(null, user);
+    } else {
+      const newUser = await User.create({
+        name,
+        avatarUrl: picture,
+        googleId: id,
+      });
+      console.log(newUser);
+      return done(null, newUser);
     }
-    const newUser = await User.create({
-      name,
-      email,
-      googleId: id,
-    });
-    return cb(null, newUser);
   } catch (error) {
-    return cb(error);
+    console.log(error);
+    return done(error);
   }
 };
 

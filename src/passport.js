@@ -1,6 +1,5 @@
 import passport from "passport";
 import GithubStrategy from "passport-github";
-import FacebookStrategy from "passport-facebook";
 import KakaoStrategy from "passport-kakao";
 import LineStrategy from "passport-line-auth";
 import GoogleStrategy from "passport-google-oauth20";
@@ -8,7 +7,6 @@ import User from "./models/User";
 import routes from "./routes";
 import {
   githubLoginCallback,
-  facebookLoginCallback,
   kakaoLoginCallback,
   lineLoginCallback,
   googleLoginCallback,
@@ -21,22 +19,9 @@ passport.use(
     {
       clientID: process.env.GH_ID,
       clientSecret: process.env.GH_SECRET,
-      callbackURL: `https://fathomless-depths-83549.herokuapp.com${routes.gitHubCallback}`,
+      callbackURL: `http://localhost:4000${routes.gitHubCallback}`,
     },
     githubLoginCallback
-  )
-);
-
-passport.use(
-  new FacebookStrategy(
-    {
-      clientID: process.env.FB_ID,
-      clientSecret: process.env.FB_SECRET,
-      callbackURL: `https://fathomless-depths-83549.herokuapp.com${routes.facebookCallback}`,
-      profileFields: ["id", "displayName", "photos", "email"],
-      scope: ["public_profile", "email"],
-    },
-    facebookLoginCallback
   )
 );
 
@@ -44,7 +29,7 @@ passport.use(
   new KakaoStrategy(
     {
       clientID: process.env.KT_ID,
-      callbackURL: `https://fathomless-depths-83549.herokuapp.com${routes.kakaotalkCallback}`,
+      callbackURL: `http://localhost:4000${routes.kakaotalkCallback}`,
     },
     kakaoLoginCallback
   )
@@ -55,7 +40,7 @@ passport.use(
     {
       channelID: process.env.LINE_ID,
       channelSecret: process.env.LINE_SECRET,
-      callbackURL: `https://fathomless-depths-83549.herokuapp.com${routes.lineCallback}`,
+      callbackURL: `http://localhost:4000${routes.lineCallback}`,
       scope: ["profile", "openid", "email"],
       botPrompt: "normal",
     },
@@ -68,7 +53,7 @@ passport.use(
     {
       clientID: process.env.G_ID,
       clientSecret: process.env.G_SECRET,
-      callbackURL: `https://fathomless-depths-83549.herokuapp.com${routes.googleCallback}`,
+      callbackURL: `http://localhost:4000${routes.googleCallback}`,
     },
     googleLoginCallback
   )
