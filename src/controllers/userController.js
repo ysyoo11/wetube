@@ -201,6 +201,42 @@ export const postLineLogin = (req, res) => {
   res.redirect(routes.home);
 };
 
+// Google Log In
+
+export const googleLogin = passport.authenticate("google", {
+  scope: "https://www.googleapis.com/auth/plus.login",
+});
+
+export const googleLoginCallback = async (_, __, profile, cb) => {
+  //왜그러는지 모르겠지만, 이메일을 안줌
+  const {
+    _json: { name },
+    id,
+    email,
+  } = profile;
+  try {
+    const user = await User.findOne({ email });
+    if (user) {
+      user.googleId = id;
+      user.save();
+      //에러 없음, 유저찾음
+      return cb(null, user);
+    }
+    const newUser = await User.create({
+      name,
+      email,
+      googleId: id,
+    });
+    return cb(null, newUser);
+  } catch (error) {
+    return cb(error);
+  }
+};
+
+export const postGoogleLogin = (req, res) => {
+  res.redirect(routes.home);
+};
+
 // Log Out
 
 export const logout = (req, res) => {

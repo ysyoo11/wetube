@@ -3,6 +3,7 @@ import GithubStrategy from "passport-github";
 import FacebookStrategy from "passport-facebook";
 import KakaoStrategy from "passport-kakao";
 import LineStrategy from "passport-line-auth";
+import GoogleStrategy from "passport-google-oauth20";
 import User from "./models/User";
 import routes from "./routes";
 import {
@@ -10,6 +11,7 @@ import {
   facebookLoginCallback,
   kakaoLoginCallback,
   lineLoginCallback,
+  googleLoginCallback,
 } from "./controllers/userController";
 
 passport.use(User.createStrategy());
@@ -54,10 +56,21 @@ passport.use(
       channelID: process.env.LINE_ID,
       channelSecret: process.env.LINE_SECRET,
       callbackURL: `https://fathomless-depths-83549.herokuapp.com${routes.lineCallback}`,
-      scope: ["profile", "openid"],
+      scope: ["profile", "openid", "email"],
       botPrompt: "normal",
     },
     lineLoginCallback
+  )
+);
+
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.G_ID,
+      clientSecret: process.env.G_SECRET,
+      callbackURL: `https://fathomless-depths-83549.herokuapp.com${routes.googleCallback}`,
+    },
+    googleLoginCallback
   )
 );
 

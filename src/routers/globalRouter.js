@@ -17,6 +17,8 @@ import {
   lineLogin,
   postKakaoLogin,
   postLineLogin,
+  googleLogin,
+  postGoogleLogin,
 } from "../controllers/userController";
 import { onlyPublic, onlyPrivate } from "../middlewares";
 
@@ -64,6 +66,14 @@ globalRouter.get(
   routes.lineCallback,
   passport.authenticate("line", { failureRedirect: "/login" }),
   postLineLogin
+);
+
+globalRouter.get(routes.google, googleLogin);
+
+globalRouter.get(
+  routes.googleCallback,
+  passport.authenticate("google", { failureRedirect: "/login" }),
+  postGoogleLogin
 );
 
 globalRouter.get(routes.me, getMe);

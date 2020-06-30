@@ -39,6 +39,10 @@ const KT_CALLBACK = "/oauth";
 const LINE = "/auth/line";
 const LINE_CALLBACK = "/auth/line/callback";
 
+// Google
+const GOOGLE = "/auth/google";
+const GOOGLE_CALLBACK = "/auth/google/callback";
+
 // API
 const API = "/api";
 const REGISTER_VIEW = "/:id/view";
@@ -94,6 +98,8 @@ const routes = {
   kakaotalkCallback: KT_CALLBACK,
   line: LINE,
   lineCallback: LINE_CALLBACK,
+  google: GOOGLE,
+  googleCallback: GOOGLE_CALLBACK,
   api: API,
   registerView: REGISTER_VIEW,
   addComment: ADD_COMMENT,
