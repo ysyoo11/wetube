@@ -1,5 +1,3 @@
-import getBlobDuration from "get-blob-duration";
-
 const videoContainer = document.getElementById("jsVideoPlayer");
 const videoPlayer = document.querySelector("#jsVideoPlayer video");
 const playBtn = document.getElementById("jsPlayButton");
@@ -8,6 +6,9 @@ const fullScrnBtn = document.getElementById("jsFullScreen");
 const currentTime = document.getElementById("jsCurrentTime");
 const totalTime = document.getElementById("jsTotalTime");
 const volumeRange = document.getElementById("jsVolume");
+const progressBar = document.getElementById("jsProgressBar");
+const btnBackward = document.getElementById("jsBackwardButton");
+const btnForward = document.getElementById("jsForwardButton");
 
 const registerView = () => {
   const videoId = window.location.href.split("/videos/")[1];
@@ -71,20 +72,22 @@ function goFullScreen() {
 
 const formatDate = (seconds) => {
   const secondsNumber = parseInt(seconds, 10);
-  let hours = Math.floor(secondsNumber / 3600);
+  const hours = Math.floor(secondsNumber / 3600);
   let minutes = Math.floor((secondsNumber - hours * 3600) / 60);
   let totalSeconds = secondsNumber - hours * 3600 - minutes * 60;
 
-  if (hours < 10) {
-    hours = `0${hours}`;
-  }
   if (minutes < 10) {
     minutes = `0${minutes}`;
   }
   if (totalSeconds < 10) {
     totalSeconds = `0${totalSeconds}`;
   }
-  return `${hours}:${minutes}:${totalSeconds}`;
+  if (hours >= 1) {
+    return `${hours}:${minutes}:${totalSeconds}`;
+  }
+  if (hours < 1) {
+    return `${minutes}:${totalSeconds}`;
+  }
 };
 
 function getCurrentTime() {
@@ -92,8 +95,8 @@ function getCurrentTime() {
 }
 
 async function setTotalTime() {
-  const blob = await fetch(videoPlayer.src).then((response) => response.blob());
-  const duration = await getBlobDuration(blob);
+  const duration = await videoPlayer.duration;
+  console.log(duration);
   const totalTimeString = formatDate(duration);
   totalTime.innerHTML = totalTimeString;
   setInterval(getCurrentTime, 1000);
@@ -120,10 +123,28 @@ function handleDrag(event) {
   }
 }
 
+function updateProgressBar() {
+  const percentage = Math.floor(
+    (100 / videoPlayer.duration) * videoPlayer.currentTime
+  );
+  progressBar.value = percentage;
+}
+
+function moveBackward() {
+  videoPlayer.currentTime -= 5;
+}
+function moveForward() {
+  videoPlayer.currentTime += 5;
+}
+
 function init() {
   registerView();
   videoPlayer.volume = 0.5;
+  videoPlayer.addEventListener("timeupdate", updateProgressBar, false);
+  btnBackward.addEventListener("click", moveBackward, false);
+  btnForward.addEventListener("click", moveForward, false);
   playBtn.addEventListener("click", handlePlayClick);
+  videoPlayer.addEventListener("click", handlePlayClick);
   volumeBtn.addEventListener("click", handleVolumeClick);
   fullScrnBtn.addEventListener("click", goFullScreen);
   videoPlayer.addEventListener("loadedmetadata", setTotalTime);
