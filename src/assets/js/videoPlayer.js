@@ -70,7 +70,7 @@ function goFullScreen() {
   fullScrnBtn.addEventListener("click", exitFullScreen);
 }
 
-const formatDate = (seconds) => {
+const formatDate = async (seconds) => {
   const secondsNumber = parseInt(seconds, 10);
   const hours = Math.floor(secondsNumber / 3600);
   let minutes = Math.floor((secondsNumber - hours * 3600) / 60);
@@ -90,15 +90,15 @@ const formatDate = (seconds) => {
   }
 };
 
-function getCurrentTime() {
-  currentTime.innerHTML = formatDate(Math.floor(videoPlayer.currentTime));
+async function getCurrentTime() {
+  currentTime.innerHTML = await formatDate(Math.floor(videoPlayer.currentTime));
   console.log(error);
 }
 
 async function setTotalTime() {
   const duration = await videoPlayer.duration;
   console.log(duration);
-  const totalTimeString = formatDate(duration);
+  const totalTimeString = await formatDate(duration);
   totalTime.innerHTML = totalTimeString;
   setInterval(getCurrentTime, 1000);
   console.log(error);
