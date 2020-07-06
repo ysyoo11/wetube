@@ -95,14 +95,23 @@ function getCurrentTime() {
   console.log(error);
 }
 
-async function setTotalTime() {
+// async function setTotalTime() {
+//   const duration = await videoPlayer.duration;
+//   console.log(duration);
+//   const totalTimeString = formatDate(duration);
+//   totalTime.innerHTML = totalTimeString;
+//   setInterval(getCurrentTime, 1000);
+//   console.log(error);
+// }
+
+const setTotalTime = async () => {
   const duration = await videoPlayer.duration;
   console.log(duration);
   const totalTimeString = formatDate(duration);
   totalTime.innerHTML = totalTimeString;
   setInterval(getCurrentTime, 1000);
   console.log(error);
-}
+};
 
 function handleEnded() {
   videoPlayer.currentTime = 0;
