@@ -92,6 +92,7 @@ const formatDate = (seconds) => {
 
 function getCurrentTime() {
   currentTime.innerHTML = formatDate(Math.floor(videoPlayer.currentTime));
+  console.log(error);
 }
 
 async function setTotalTime() {
@@ -100,6 +101,7 @@ async function setTotalTime() {
   const totalTimeString = formatDate(duration);
   totalTime.innerHTML = totalTimeString;
   setInterval(getCurrentTime, 1000);
+  console.log(error);
 }
 
 function handleEnded() {
